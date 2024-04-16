@@ -10,9 +10,10 @@ function App(){
       ).then(
         data => {
           setData(data)
-          console.log(data)
+          console.log("This is the data: ", data)
         }
       )
+
     },[])
 
 

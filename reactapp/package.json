@@ -1,9 +1,8 @@
 {
   "name": "reactapp",
-  "private": true,  
+  "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "http://localhost:5000",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -11,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
