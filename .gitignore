@@ -1,2 +1,3 @@
 CTPEnv
 .env
+server/__pycache__
