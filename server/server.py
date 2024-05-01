@@ -30,19 +30,19 @@ def home_page():
     print(output)
     return jsonify(output)
 
-@app.route('/mongo', methods=['GET'])
-
+@app.route('/', methods=['GET'])
 #All the necessary information for each character
 def insert_all_docs():
-  client.db.player_info.insert_one({
-      "Name": "Anthony",
-      "Race": "Human",
-      "Class": "Wizard",
-      "Weapons": ["Staff", "Spellbook"],
+  db_operations.insert_one({
+      "Name": "Joseph",
+      "Race": "Kobol",
+      "Class": "Paladin",
+      "Weapons": ["Sword", "Mace"],
       "Background": "Scholar",
       "BackgroundStory":[],
       "Images":[],
     })
+  
   return "Inserted"
 
 

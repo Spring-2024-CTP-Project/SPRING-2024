@@ -27,6 +27,7 @@ function App() {
 
       <div className="container  col-4 pt-4">
         <h2>Campaign Page</h2>
+        <img src=""></img>
         <p>Create a demo campaign to learn the basics of the Game</p>
         <Link to="/Campaign">
         <button>
@@ -37,6 +38,7 @@ function App() {
 
       <div className="container   col-4 pt-4">
       <h2>Chat-Bot Page</h2>
+      <img src=""></img>
         <p>Learn the basics of the Game by asking some questions</p>
         <Link to="/Help">
         <button>
