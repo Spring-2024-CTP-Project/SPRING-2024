@@ -1,0 +1,33 @@
+
+
+.read-the-docs {
+  color: #888;
+}
+
+
+.navigation{
+ 
+  justify-content: center;
+  background-color: rgb(173, 153, 126);
+
+}
+
+.button{
+  border-radius: 100px;
+  max-width: 150px;
+  margin: 10px;
+
+}
+
+.button:hover
+{
+  transform: scale(1.1);
+  background-color: rgb(93, 89, 83);
+  
+}
+
+.background
+{
+  background-color: rgb(106, 106, 105);
+
+}

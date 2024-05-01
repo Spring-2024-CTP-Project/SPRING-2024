@@ -1,44 +1,43 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import axios from "axios"
+import './components.css'
 
 function Characterinfo() {
-  const [data, setData] = useState([{}])
-  const [array, setArray] = useState([])
-const fetchApi = async () => {
+  const [characters, setCharacters] = useState([{}])
 
-const response = await axios.get("http://127.0.0.1:8080/api/characters")
-
-setArray(response.data.characters)
+const fetchCharacters = async () => {
+try{
+  const response = await axios.get("http://127.0.0.1:8080")
+  setCharacters(response.data);
+} catch (error){
+  console.error(error)
+}
 };
-
 
 useEffect(() =>
 {
-  fetchApi()
+  fetchCharacters()
 }, [] )
 
 
   return (
-      <div>
-        <h1> CHARACTER SELECT</h1>
-        
-          Choose which characters you want to include in the campaign
-          <br></br>
-          {
-          array.map((characters, index)=> (
-            <ul>
-            <li>{characters.Name}: {characters.Background}</li>   
-            <br></br>
-            </ul>
-         
-          ))
-
-          }
-       
-      </div>
+    <div>
       
-  )
+    <div className='container-xxl row px-'>
+    <p>THE CHARACTERS</p>
+    <div className=''>
+      {characters.map((character, index) => (
+        <div className='container my-2 mx-2 pt-2 background col' key={index}>
+          <div className='container'>{character.Name}: {character.Background} Weapon: {character.Weapons}</div>
+        </div>
+      ))}
+    </div>
+      </div>  
+   
+
+  </div>
+      
+  );
 }
 
 export default Characterinfo

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
 from flask_pymongo import PyMongo
 from pymongo.server_api import ServerApi
 from flask_cors import CORS
@@ -7,7 +7,9 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
 app = Flask(__name__)
+CORS(app)
 app.config["MONGO_URI"] = os.getenv("DB_URI")
 uri = os.getenv("DB_URI")
 client = MongoClient(uri, server_api=ServerApi('1'))
@@ -17,27 +19,34 @@ try:
     print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
     print(e)
-mongo = PyMongo(app)
 
+mongo = PyMongo(app).db
 
 db_operations = client.db.player_info
-@app.route("")
+@app.route("/")
 def home_page():
     users = db_operations.find()
     output = [{'Name' : user['Name'], 'Race' : user['Race'], 'Class' : user['Class'], 'Weapons' : user['Weapons'], 'Background' : user['Background']} for user in users]
-    #print(output)
+    print(output)
     return jsonify(output)
 
 @app.route('/mongo', methods=['GET'])
+
+#All the necessary information for each character
 def insert_all_docs():
   client.db.player_info.insert_one({
       "Name": "Anthony",
       "Race": "Human",
       "Class": "Wizard",
       "Weapons": ["Staff", "Spellbook"],
-      "Background": "Scholar"
+      "Background": "Scholar",
+      "BackgroundStory":[],
+      "Images":[],
     })
   return "Inserted"
 
+
 if __name__=="__main__":
     app.run(debug=True, port=8080)
+
+

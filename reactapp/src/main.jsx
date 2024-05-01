@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import NotFound from './NotFound';
-import Characterpage from './Characterpage';
-import Campaign from './Campaign';
-import Help from './Help';
+import App from './Pages/App'
+import NotFound from './Pages/NotFound';
+import Characterpage from './Pages/Characterpage';
+import Campaign from './Pages/Campaign';
+import Help from './Pages/Help';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter([
   {
