@@ -16,7 +16,7 @@ function App() {
       Name: name,
       Race: race,
       Class: characterClass,
-      Weapons: weapons.split(',').map(weapon => weapon.trim()), // Assuming weapons are entered as comma-separated values
+      Weapons: weapons.split(',').map(weapon => weapon.trim()), 
       Background: background
     };
 
