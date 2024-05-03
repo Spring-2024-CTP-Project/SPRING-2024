@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from flask_pymongo import PyMongo
 from pymongo.server_api import ServerApi
@@ -19,7 +19,8 @@ except Exception as e:
     print(e)
 mongo = PyMongo(app)
 
-
+db = client.db
+collection = db.player_info 
 db_operations = client.db.player_info
 @app.route("/")
 def home_page():
@@ -28,16 +29,13 @@ def home_page():
     #print(output)
     return jsonify(output)
 
-@app.route('/mongo', methods=['GET'])
+@app.route('/process_character', methods=['POST'])
 def insert_all_docs():
-  client.db.player_info.insert_one({
-      "Name": "Anthony",
-      "Race": "Human",
-      "Class": "Wizard",
-      "Weapons": ["Staff", "Spellbook"],
-      "Background": "Scholar"
-    })
-  return "Inserted"
+  character_data = request.json
+  collection.insert_one(character_data)
+  return jsonify({"message": "Character added successfully"})
+
+
 
 
 if __name__=="__main__":
