@@ -1,15 +1,9 @@
 
 
-.read-the-docs {
-  color: #888;
-}
-
-
 .navigation{
  
   justify-content: center;
-  background-color: rgb(173, 153, 126);
-
+  background-color: rgb(107, 107, 107);
 }
 
 .button{
@@ -18,13 +12,30 @@
   margin: 10px;
 
 }
-
 .button:hover
 {
   transform: scale(1.1);
-  background-color: rgb(93, 89, 83);
   
 }
+
+.mask{
+  
+  background-color: rgb(0, 0, 0);
+  justify-content: center;
+
+}
+
+.Link {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.characterPAGE{
+
+
+ 
+}
+
 
 .background
 {
