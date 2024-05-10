@@ -3,6 +3,12 @@ import Navbar from "../Components/navbar";
 import "./index.css";
 
 function Campaign(){
+
+
+
+    const handleClick =(e)=>{
+     
+    }
     return(
         
         <div className="">
@@ -18,7 +24,7 @@ function Campaign(){
                     No Campaigns created...
                 </div>
 
-                <button className="btn btn-outline-dark btn-lg">
+                <button className="btn btn-outline-dark btn-lg" onClick={handleClick}>
                     Start New
                 </button>
 
