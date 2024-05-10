@@ -7,11 +7,18 @@
     background-image: url("../assets/Gemini_Generated_Image_f1c5g6f1c5g6f1c5.jpg");
     background-position:center;
     background-size: cover;
+
    
   }
   
+.para{
+
+  
+}
 .background{
     background-color: rgba(250, 241, 215, 0.574);
+
     padding: 1rem;
     
 }
+

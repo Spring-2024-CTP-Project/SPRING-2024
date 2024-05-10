@@ -3,8 +3,14 @@
 .navigation{
  
   justify-content: center;
-  background-color: rgb(107, 107, 107);
+  background-color: rgba(6,57,76,255);
+  font-family: 'Courier New', Courier, monospace;
 }
+
+.bi{
+
+}
+
 
 .button{
   border-radius: 100px;
@@ -15,6 +21,7 @@
 .button:hover
 {
   transform: scale(1.1);
+  
   
 }
 
@@ -30,11 +37,6 @@
   border-bottom: none;
 }
 
-.characterPAGE{
-
-
- 
-}
 
 
 .background

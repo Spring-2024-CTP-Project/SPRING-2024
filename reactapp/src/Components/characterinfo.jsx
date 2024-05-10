@@ -40,6 +40,7 @@ useEffect(() => //useEffect renders functions
         </div>
         <ul className='list-group list-group-flush'>
           <li className='list-group-item'>Weapons: {character.Weapons}</li>
+          <li className="list-group-item">Race: {character.Race} </li>
         </ul>
       </div>
     </div>

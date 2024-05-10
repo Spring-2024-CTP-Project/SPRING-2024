@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import axios from "axios";
@@ -9,24 +9,33 @@ import Popup from "reactjs-popup";
 export default function Charactersheet() {
 
     const [data, setData] = useState([{}]);
-    const [character, setCharacter] = useState({name:"",race:"", characterClass:"", weapons:[null], background:"", allignment:"", points:[null,null,null,null,null,null], images:[null]}, )
+    const [character, setCharacter] = useState({name:"", race:"", characterClass:"", weapons:[null], background:"", allignment:"", points:[null,null,null,null,null,null], images:[null], hitpoints: 0} )
     const [description, setDescription] = useState("");
-    const [showPopup, setShowPopup] = useState(false);
-    console.log(character);
+    console.log(description);
 
+    const initialCharacter = {
+      name: '',
+      race: '',
+      characterClass: '',
+      weapons: [null],
+      background: '',
+      allignment: '',
+      points: [null, null, null, null, null, null],
+      images: [null],
+      hitpoints: 0
+    };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(character.name.trim()==='' || character.race.trim()===''|| character.characterClass.trim()==='' || character.weapons.includes(null), character.allignment.trim()==='' || character.points.includes(null ))
+        if(character.name.trim()==='' || character.race.trim()===''|| character.characterClass.trim()==='' || character.weapons.includes(null), character.allignment.trim()==='' || character.points.includes(null ) || character.hitpoints.trim()===0)
         {
-            setShowPopup(true);
+
             alert("PLEASE FILL IN ALL REQUIRED FIELDS");
             return;
         }
 
-    const characterData = {
-     ...character
-    };
+
 
     try {
       const response = await fetch('http://127.0.0.1:8080/process_character', {
@@ -34,7 +43,7 @@ export default function Charactersheet() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(characterData)
+        body: JSON.stringify(character)
 
       });
     
@@ -42,15 +51,8 @@ export default function Charactersheet() {
         alert('Character added successfully!');
         
         // Clear form fields after successful submission
-         setCharacter.name('');
-         setCharacter.race('');
-         setCharacter.characterClass('');
-         setCharacter.weapons([null]);
-         setCharacter.background('');
-         setCharacter.allignment('');
-         setCharacter.points([null,null,null,null,null,null]);
-         setCharacter.images([null]);
-         setDescription('');
+        setCharacter(initialCharacter);
+        setDescription('');
 
       } else {
         alert('Failed to add character. Please try again later.');
@@ -62,19 +64,24 @@ export default function Charactersheet() {
     };
 
     const handleChange = (e) =>{
-        const { name, value } = e.target;
-        setCharacter({
+        const { name, value} = e.target;
+       
+        if(name === 'description')
+          {
+            setDescription(value)
+          }
+          else if(name=== 'race'){
+
+            
+
+
+
+
+            setCharacter({
             ...character,
             [name]: value,
-           [race]: value,
-           [characterClass]: value,
-            [weapons]: value,
-            [background]: value,
-            [alignment]: value,
-            [points]: value,
-            [images]:value
-
-        })
+        })}
+        
     } 
 
     const handleClick = (e) =>
@@ -115,8 +122,9 @@ export default function Charactersheet() {
           <input type="text" 
           className="mx-1"
           name="name"
+          value={character.name}
           onChange={handleChange}>
-        
+          
           </input>
         </label>
         </div>
@@ -128,6 +136,7 @@ export default function Charactersheet() {
           <select
              name="race"
              className="mx-1"
+             value={character.race}
              onChange={handleChange}
           >
             <option value=""></option>
@@ -147,18 +156,19 @@ export default function Charactersheet() {
             <select
               name="allignment"
               className="mx-1"
+              value={character.allignment}
               onChange={handleChange}
               >
             <option value="" ></option>
             <option value="Neutral" >Neutral</option>
             <option value="Lawful Neutral" >  Neutral Good</option>
             <option value="Chaotic Neutral" > Nuetral Evil</option>
-            <option value="True Neutral"> Lawful Nuetral</option>
-            <option value="True Neutral"  > Lawful Good</option>
-            <option value="True Neutral"> Lawful Evil</option>
-            <option value="True Neutral"> Chaotic Good</option>
-            <option value="True Neutral" > Chaotic Nuetral</option>
-            <option value="True Neutral" > Chaotic Evil</option>
+            <option value="Lawful Nuetral"> Lawful Nuetral</option>
+            <option value="Lawful Good"  > Lawful Good</option>
+            <option value="Lawful Evil"> Lawful Evil</option>
+            <option value="Chaotic Good"> Chaotic Good</option>
+            <option value="Chaotic Nuetral" > Chaotic Nuetral</option>
+            <option value="Chaotic Evil" > Chaotic Evil</option>
           </select>
         </label>
         </div>
@@ -167,8 +177,9 @@ export default function Charactersheet() {
         <label>
           Pick a Character Class for them:
           <select
-            name="class"
+            name="characterClass"
             className="mx-1"
+            value={character.characterClass}
             onChange={handleChange}>
             <option value="" ></option>
             <option value="Paladin" >Paladin</option>
@@ -186,7 +197,7 @@ export default function Charactersheet() {
 
         <div className="container d-flex my-2">
             <label>Give yourself some weapons (seperate by comma):
-                <input type="text" name="weapons" className="mx-2" onChange={handleChange}>
+                <input type="text" name="weapons" value={character.weapons} className="mx-2" onChange={handleChange}>
                 </input>
             </label>
         </div>
@@ -194,7 +205,7 @@ export default function Charactersheet() {
         <div className="container d-flex my-2">
             <label>Now roll the dice to get points for your attributes:
              <div className="container" >
-                <button style={{borderColor:"red"}} className="btn btn-dark" onClick={handleClick} > ROLL</button>
+                <button style={{borderColor:"red"}} value={character.points} className="btn btn-dark" onClick={handleClick} > ROLL</button>
              </div>
             </label>
         </div>
@@ -214,13 +225,13 @@ export default function Charactersheet() {
         Now add a little visual description to this character and our model will make them come to life
       </label>
       <div className="container row">
-      <input type="text"></input>
+      <input type="text" name="description"value={description} onChange={handleChange}></input>
       </div>
       
       </div>
 
       <button className="btn btn-dark" onClick={handleSubmit}>
-        CREATE
+        GENERATE
       </button>
        
       </form>
