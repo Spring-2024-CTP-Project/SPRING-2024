@@ -1,13 +1,16 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 from flask_pymongo import PyMongo
 from pymongo.server_api import ServerApi
 import os
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 app.config["MONGO_URI"] = os.getenv("DB_URI")
 uri = os.getenv("DB_URI")
 client = MongoClient(uri, server_api=ServerApi('1'))
@@ -19,7 +22,8 @@ except Exception as e:
     print(e)
 mongo = PyMongo(app)
 
-
+db = client.db
+collection = db.player_info 
 db_operations = client.db.player_info
 @app.route("/")
 def home_page():
@@ -28,16 +32,27 @@ def home_page():
     #print(output)
     return jsonify(output)
 
-@app.route('/mongo', methods=['GET'])
+@app.route('/process_character', methods=['POST'])
 def insert_all_docs():
-  client.db.player_info.insert_one({
-      "Name": "Anthony",
-      "Race": "Human",
-      "Class": "Wizard",
-      "Weapons": ["Staff", "Spellbook"],
-      "Background": "Scholar"
-    })
-  return "Inserted"
+  try:
+      character_data = request.json
+
+      # Check if character_data is not None and is a dictionary
+      if not character_data or not isinstance(character_data, dict):
+          return jsonify({"error": "Invalid character data"}), 400
+
+      # Insert the character data into the MongoDB collection
+      result = collection.insert_one(character_data)
+
+      if result.acknowledged:
+          return jsonify({"message": "Character added successfully"}), 201
+      else:
+          return jsonify({"error": "Failed to add character"}), 500
+
+  except Exception as e:
+      return jsonify({"error": str(e)}), 500
+
+
 
 
 if __name__=="__main__":
