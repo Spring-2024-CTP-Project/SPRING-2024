@@ -10,6 +10,8 @@ import json
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+from flask_cors import CORS
+
 
 load_dotenv()
 
@@ -27,9 +29,9 @@ try:
 except Exception as e:
     print(e)
 
-mongo = PyMongo(app).db
-
-collection = client.db.player_info
+db = client.db
+collection = db.player_info 
+db_operations = client.db.player_info
 @app.route("/")
 def home_page():
     users = collection.find()
@@ -37,48 +39,25 @@ def home_page():
     print(output)
     return jsonify(output)
 
-
-
 @app.route('/process_character', methods=['POST'])
-#All the necessary information for each character
 def insert_all_docs():
-   try:
-        character_data = request.json
-        if not character_data or not isinstance(character_data, dict):
-            return jsonify({"error": "Invalid character data"}), 400
-        result = collection.insert_one(character_data)
+  try:
+      character_data = request.json
 
-        if result.acknowledged:
-            return jsonify({"message": "Character added successfully"}), 201
-        else:
-            return jsonify({"error": "Failed to add character"}), 500
-  
-   except Exception as e:
-        return jsonify({"error": str(e)}), 500
-    
+      # Check if character_data is not None and is a dictionary
+      if not character_data or not isinstance(character_data, dict):
+          return jsonify({"error": "Invalid character data"}), 400
 
-#fucntion that sends a prompt to the model and generates text 
-@app.route('/generate', methods=['POST'])
-def generate():
-    character_data = request.json
-    if not character_data or not isinstance(character_data, dict):
-        return jsonify({"error": "Invalid character data"}), 400
+      # Insert the character data into the MongoDB collection
+      result = collection.insert_one(character_data)
 
-    message = f"Describe the background of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. This character's weapons are the {', '.join(character_data['weapons'])}. They are {character_data['alignment']} background. Use 150 words."
-    try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a Dungeons & Dragons expert"},
-                {"role": "user", "content": message}
-            ]
-        )
-        generated_text = response.choices[0].message.content.strip()
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+      if result.acknowledged:
+          return jsonify({"message": "Character added successfully"}), 201
+      else:
+          return jsonify({"error": "Failed to add character"}), 500
 
-
-
+  except Exception as e:
+      return jsonify({"error": str(e)}), 500
 
 
 
