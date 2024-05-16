@@ -67,7 +67,8 @@ if(name==='generate'){
 }
 
 try {
-  const response = await fetch("http://127.0.0.1:8080/generate", setShowModal(true), {
+  setShowModal(true)
+  const response = await fetch("http://127.0.0.1:8080/generate", {
     
     method: "POST",
     headers: {
@@ -77,13 +78,14 @@ try {
     body: JSON.stringify(character),
     
   });
-  setTimeout(()=> setLoading(false), 3300)
+  
   
   const data= await response.json();
   if (response.ok) {
+    setShowModal(false)
     alert("Generated succesfully!");
     console.log('Response data:', data)
-
+   
     
     setCharacter({
       ...character,
