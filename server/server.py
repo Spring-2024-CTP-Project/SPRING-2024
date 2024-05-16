@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 from pymongo.mongo_client import MongoClient
 from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
 from pymongo.server_api import ServerApi
 from flask_cors import CORS
 import os
@@ -11,7 +12,6 @@ import os
 import traceback
 import logging
 from openai import OpenAI
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -39,7 +39,7 @@ collection = client.db.player_info
 def home_page():
     users = collection.find()
     print(users)
-    output = [{ 'Name' : user['name'], 'Race' : user['race'], 'Class' : user['characterClass'], 'Weapons' : user['weapons'], 'Background' : user['background'], 'Attribute Points' : user['points'], 'Allignment': user['allignment'], "Images": user['images']} for user in users]
+    output = [{ 'Name' : user['name'], 'Race' : user['race'], 'Class' : user['characterClass'], 'Weapons' : user['weapons'], 'Background' : user['background'], 'AttributePoints' : user['points'], 'Allignment': user['allignment'], "Images": user['images'], 'Hitpoints': user['hitpoints']} for user in users]
     return jsonify(output)
 
 
@@ -70,7 +70,7 @@ def generate():
         if not character_data or not isinstance(character_data, dict):
             return jsonify({"error": "Invalid character data"}), 400
 
-        message = f"Describe the background of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. This character's weapons are the {(character_data['weapons'])}. Their allignment is {character_data['allignment']}. Use 150 words."
+        message = f"Describe the background of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. This character's weapons are the {(character_data['weapons'])}. Their allignment is {character_data['allignment']}.  Use 150 words."
         
         response = AIclient.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -80,7 +80,7 @@ def generate():
             ]
         )
         generated.append( response.choices[0].message.content.strip())
-        prompt = f"Generate a fantasy image of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. They are equipped with {(character_data['weapons'])}have a {character_data['background']} background. Use the characteristics of {character_data["description"]}to help you visualize the character. Place the name {character_data["name"]} at the bottom of the image"
+        prompt = f"Generate a fantasy image of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. They are equipped with {(character_data['weapons'])}have a {character_data['background']} background. Use the characteristics of {character_data["description"]} to help you visualize the character. THERE IS NO TEXT ON THE IMAGE EXCEPT, {character_data["name"]} at the bottom of the image"
         response = AIclient.images.generate(
              model="dall-e-3",
              prompt=prompt ,
@@ -95,7 +95,36 @@ def generate():
     except Exception as e:
         logging.error('An error occurred: %s', traceback.format_exc())
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/delete_character', methods=['DELETE'])
+def delete_docs():
+  try:
+      character_data = request.json
 
+      # Check if character_data is not None and is a dictionary
+      if not character_data or not isinstance(character_data, dict):
+          return jsonify({"error": "Invalid character data"}), 400
+
+      # delete  the character data into the MongoDB collection
+      
+     
+      character_id= character_data.get('_id:')
+      object_id = ObjectId(character_id)
+      print("CHARACTER ID", object_id)
+      
+      if not object_id:
+            return jsonify({"error": "Missing character ID"}), 400
+      
+
+      result = collection.delete_one({"_id": object_id})
+
+      if result.deleted_count > 0:
+          return jsonify({"message": "Character deleted successfully"}), 201
+      else:
+          return jsonify({"error": "Failed to delete character"}), 500
+
+  except Exception as e:
+      return jsonify({"error": str(e)}), 500
 
 
 if __name__=="__main__":

@@ -20,6 +20,15 @@ const router = createBrowserRouter([
     element: <Characterpage/>,
     errorElement: <NotFound/>
   },
+  
+  
+
+  
+  
+  
+  
+  
+  
   {
     path: "/Campaign",
     element: <Campaign/>,
