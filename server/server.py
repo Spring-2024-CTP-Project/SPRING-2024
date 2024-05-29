@@ -35,13 +35,20 @@ except Exception as e:
 mongo = PyMongo(app).db
 
 collection = client.db.player_info
-@app.route("/")
+collection2= client.db.Campaign
+
+@app.route("/users")
 def home_page():
     users = collection.find()
     print(users)
     output = [{ 'Name' : user['name'], 'Race' : user['race'], 'Class' : user['characterClass'], 'Weapons' : user['weapons'], 'Background' : user['background'], 'AttributePoints' : user['points'], 'Allignment': user['allignment'], "Images": user['images'], 'Hitpoints': user['hitpoints']} for user in users]
     return jsonify(output)
 
+@app.route("/campaigns")
+def get_campaigns():
+    campaigns=collection2.find()
+    output=[{'Title' : campaign['title']} for campaign in campaigns ]
+    return jsonify(output)
 
 @app.route('/process_character', methods=['POST'])
 #All the necessary information for each character

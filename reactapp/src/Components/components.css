@@ -2,6 +2,7 @@
 *{
 
 font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;}
+
 .navigation{
  
   justify-content: center;
@@ -11,7 +12,8 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
 }
 
 
-.card-outline{
+.card-outline {
+  
   min-height: 60vh;
   width: 50vw;
   margin: 5rem auto;
@@ -25,9 +27,8 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
   box-shadow:  -2px 0 7px #000;
   display: flex; /* Add this line */
   flex-direction: column; /* Add this line */
-  align-items: center; /* Add this line */
     
-.name{
+.name{  
 margin-top: 10px;
 text-align: start;
 font-size: 30px;
@@ -68,15 +69,64 @@ color: blueviolet;
   }
 }
 
+.card1-outline {
+  
+  min-height: 40vh;
+  max-width: 35vw;
+  margin: 5rem auto;
+  border: 2px solid #ffffff22;
+  background-color: #7a88a3;
+  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(40, 19, 59, 0.5) 100%);
+  border-radius: .7rem;
+  overflow:auto;
+  backdrop-filter: blur(7px);
+  transition: 0.4s all;
+  box-shadow:  -2px 0 7px #000;
+  
+    
+.name{  
+margin-top: 10px;
+text-align: start;
+font-size: 30px;
+color: rgb(0, 107, 77);
+text-align: center;
 
+ }
+ .description{
+  text-align: center;
+  font-size: 20px;
+  color: burlywood;
+  
+ }
+ .img{
+  
+  flex-wrap: wrap;
+ 
+ }
+ .rest{
+  text-align: start;
+  font-size:18px
+ }
+ .hitpoints{
 
-
-.button{
-  border-radius: 100px;
-  max-width: 150px;
-  margin: 10px;
-
+  text-align: center;
+color: blueviolet;
+ }
+  &:hover{
+    border: 1px solid #ffffff44;
+    box-shadow: 0 7px 50px 10px #000000aa;
+    transform: scale(1.01);
+    filter: brightness(1.1);
+    
+    ::before{
+      filter: brightness(.5);
+      
+    }
+  }
 }
+
+
+
 .button:hover
 {
   transform: scale(1.1);
@@ -97,6 +147,7 @@ color: blueviolet;
 .Link {
   text-decoration: none;
   border-bottom: none;
+  color: #eeeaea;
 }
 
 .label{

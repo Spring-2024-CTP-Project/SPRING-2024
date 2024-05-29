@@ -4,7 +4,7 @@ import './components.css'
 import parchment from "../assets/parchment.jpg"
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
-import Card from './card';
+import Card from './charcard';
 
 function Characterinfo() {
   const [characters, setCharacters] = useState([{}])
@@ -16,7 +16,7 @@ function Characterinfo() {
   //FETCHES information from backend using axios
 const fetchCharacters = async () => {
 try{
-  const response = await axios.get("http://127.0.0.1:8080") // port to python server
+  const response = await axios.get("http://127.0.0.1:8080/users") // port to python server
   setCharacters(response.data);//stores characters that are fetched
 } catch (error){
   console.error(error)
@@ -38,11 +38,13 @@ useEffect(() => //useEffect renders functions
   setTimeout(()=> setLoading(false), 3300)
   fetchCharacters()
 }, [] )
+
+// sets the loader
 if(loading)
   {
     return (
       
-    <h1 className='background '>
+    <h1 className='background my-4 '>
      <Spinner animation="border" />
 
       </h1>)
@@ -69,12 +71,12 @@ if(loading)
         >
        
         <Modal.Header closeButton>
-          <Modal.Title id="">
+          <Modal.Title id="" className='name'>
             {character.Name}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body
-        >
+        className='background'>
         
         Class: {character.Class}
         <div>
@@ -85,6 +87,9 @@ if(loading)
         </div>
         <div>
         Weapons: {character.Weapons} 
+        </div>
+        <div>
+        Hit-Points: {character.Hitpoints} 
         </div>
         <hr></hr>
         

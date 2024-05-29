@@ -13,7 +13,8 @@ function Characterpage(){
         <Characterinfo/>
         <div className="pt-5"></div>
         <Charactersheet/>
-        
+        <div className="pt-3"></div>
+        <Footer></Footer>       
         </div>
        
         

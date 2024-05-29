@@ -4,7 +4,7 @@ import "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import "./components.css";
-import Card from "./card";
+import Card from "./charcard";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/Modal";
