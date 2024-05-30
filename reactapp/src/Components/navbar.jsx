@@ -5,9 +5,9 @@ import logo from "../assets/logo2.jpg";
 
 export default function Navbar() {
   return (
-    <div className="navbar sticky-top pt-0 navigation navbar-expand-lg container-fluid">
-      <nav className="container-fluid d-flex justidy-content-end">
-        <div className="navbar-brand brand navigation text-white">
+    <div className="navbar sticky-top pt-0 navigation navbar-expand-lg container-fluid ">
+      <nav className="container-fluid d-flex ">
+        <div className="navbar-brand brand navigation mx-4 my-1 text-white">
         <Link to="/" className="Link">
           <img
             src={logo}

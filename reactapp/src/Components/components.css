@@ -1,14 +1,14 @@
 
 *{
 
-font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;}
+font-family:'Times New Roman', Times, serif}
 
 .navigation{
  
   justify-content: center;
-  background-color: rgba(6,57,76,255);
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  
+  background-color:#282c34;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
 }
 
 
@@ -71,12 +71,12 @@ color: blueviolet;
 
 .card1-outline {
   
-  min-height: 40vh;
-  max-width: 35vw;
+  min-height: 60vh;
+  width: 35vw;
   margin: 5rem auto;
-  border: 2px solid #ffffff22;
+  border: 2px solid #156b2822;
   background-color: #7a88a3;
-  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(40, 19, 59, 0.5) 100%);
+  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(91, 59, 108, 0.5) 100%);
   border-radius: .7rem;
   overflow:auto;
   backdrop-filter: blur(7px);
@@ -88,7 +88,7 @@ color: blueviolet;
 margin-top: 10px;
 text-align: start;
 font-size: 30px;
-color: rgb(0, 107, 77);
+color: rgb(53, 201, 157);
 text-align: center;
 
  }
@@ -113,10 +113,7 @@ text-align: center;
 color: blueviolet;
  }
   &:hover{
-    border: 1px solid #ffffff44;
-    box-shadow: 0 7px 50px 10px #000000aa;
-    transform: scale(1.01);
-    filter: brightness(1.1);
+   
     
     ::before{
       filter: brightness(.5);
@@ -155,13 +152,13 @@ color: blueviolet;
 font-size: large;
 font-style: italic;
 
-
-
 }
 
 .input{
-border-radius: 30px;
-border-color: #151f37;
+border-radius: 10px;
+background-color: #fefefe;
+border-color: #e24444aa;
+
 
 }
 

@@ -4,7 +4,6 @@ import "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import "./components.css";
-import Card from "./charcard";
 import Spinner from "react-bootstrap/esm/Spinner";
 import Modal from 'react-bootstrap/Modal';
 import Button from "react-bootstrap/Modal";
@@ -351,6 +350,7 @@ alert("An error occurred. Please try again later.");
               <option vlaue="Warlock">Warlock</option>
               <option vlaue="Barbarian">Barbarian</option>
             </select>
+            
           </label>
         </div>
 
@@ -428,9 +428,9 @@ alert("An error occurred. Please try again later.");
         <br></br>
         <div className="container d-flex my-3 row">
           <label className="label">
-            Now add a little visual description to this character for its visual generation (eg. age and gender)
+            Now add a little visual description to this character for its visual generation (eg. "Blonde Hair", "Large Nose")
           </label>
-          <div className="container-fluid row">
+          <div className="container-fluid mx-3 row">
             <input
               type="text"
               name="description"

@@ -5,16 +5,36 @@
     text-align: center;
     
     background-image: url("../assets/Gemini_Generated_Image_f1c5g6f1c5g6f1c5.jpg");
-    background-position:center;
+    background-position: center;
     background-size: cover;
+  
 
    
   }
   
-.para{
-
+.message{
   
+    float:inline-end;
+    padding: 15px 10px;
+    margin: 10px;
+    width: 100%;
+    border-radius: 20px 20px 1px 20px;
+    background: #cccccc;
+    color: black;
+    position:relative;
+   
+
 }
+
+.box{
+
+  height:200px;
+}
+
+.canvas{
+  height: 10px;
+}
+
 .background{
     background-color: rgba(250, 241, 215, 0.574);
 

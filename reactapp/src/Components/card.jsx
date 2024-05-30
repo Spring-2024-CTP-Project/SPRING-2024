@@ -1,22 +1,18 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import "bootstrap"
+import { Axios } from "axios";
 import './components.css'
+import Play from '../assets/play.svg'
 import Modal from 'react-bootstrap/Modal';
-import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 
-export default function Card(props, Button)
+export default function Card(props)
 {
-    const [showModal, setShowModal] = useState(false);
-    const handleCloseModal = () => {
-        setShowModal(false);
-      };
 
-    const handleClick = () => {
-
-
-    }
+   
+   console.log("PROPS TO SEND", props)
     return(
 
         <div className='my-2 text-white card1-outline main'>
@@ -26,13 +22,39 @@ export default function Card(props, Button)
           <div className='container name'>{props.title}</div>
           <hr/>
            <div className="description d-flex px-3">
-            Description: tipgmfmrifmtriogvtepvtnmvkijv rkvjt vrk[vj rkvmntrjlvotrmj kvtrvm grjlvmpgrj vkmgrij gtrlm;vmtnrj lvkkrpvntrmk[fntrmkog=otinjp egtrkem;]]
+            Description: {props.description}
            </div>
            <hr></hr>
-           <div className="container rest" ></div>
-           Characters:
+           <div className="container description d-flex" > Current Characters: </div>
+           {props.characters.map((character, index)=> (
+            <div className=" container round rest btn-dark" key={index}> 
+            <div> 
+                {character}
+            </div>
+           
+            </div>
+           ))}
+            <hr></hr>
+            <div className="">
+               Date Created: {props.date}
+            </div>
+        
         </div>
-        <button className="btn btn-dark btn-lg"> ENTER</button>
+        <hr></hr>
+        <Link to='/Start' state={{title: {props}}}
+        
+        >
+
+        <button className="btn btn-dark btn-lg my-3"> 
+        <div className="">
+           <img src={Play}
+           width={'35px'}
+           ></img>
+
+        </div>
+        </button>
+
+        </Link>
         
       </div>
       <span className="pt-2">
@@ -40,20 +62,7 @@ export default function Card(props, Button)
       </span>
     
     
-      <Modal show={showModal} onHide={handleCloseModal} >
-          <Modal.Header closeButton >
-            <Modal.Title>Confirm Delete</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="background" >Are you sure you want to delete this Campaign?</Modal.Body>
-          <Modal.Footer>
-            <Button className="" onClick={handleCloseModal}>
-              Cancel
-            </Button>
-            <Button variant="danger">
-              Delete
-            </Button>
-          </Modal.Footer>
-        </Modal>
+     
       </div>
     
     
