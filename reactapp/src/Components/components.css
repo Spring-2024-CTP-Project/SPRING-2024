@@ -1,0 +1,179 @@
+
+*{
+
+font-family:'Times New Roman', Times, serif}
+
+.navigation{
+ 
+  justify-content: center;
+  background-color:#282c34;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+
+
+.card-outline {
+  
+  min-height: 60vh;
+  width: 50vw;
+  margin: 5rem auto;
+  border: 1px solid #ffffff22;
+  background-color: #282c34;
+  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(17,0,32,.5) 100%);
+  border-radius: .7rem;
+  overflow:auto;
+  backdrop-filter: blur(7px);
+  transition: 0.4s all;
+  box-shadow:  -2px 0 7px #000;
+  display: flex; /* Add this line */
+  flex-direction: column; /* Add this line */
+    
+.name{  
+margin-top: 10px;
+text-align: start;
+font-size: 30px;
+color: cadetblue;
+text-align: center;
+
+ }
+ .characterClass{
+  text-align: center;
+  font-size: 20px;
+  color: burlywood;
+  
+ }
+ .img{
+  
+  flex-wrap: wrap;
+ 
+ }
+ .rest{
+  text-align: start;
+  font-size:18px
+ }
+ .hitpoints{
+
+  text-align: center;
+color: blueviolet;
+ }
+  &:hover{
+    border: 1px solid #ffffff44;
+    box-shadow: 0 7px 50px 10px #000000aa;
+    transform: scale(1.01);
+    filter: brightness(1.1);
+    
+    ::before{
+      filter: brightness(.5);
+      
+    }
+  }
+}
+
+.card1-outline {
+  
+  min-height: 60vh;
+  width: 35vw;
+  margin: 5rem auto;
+  border: 2px solid #156b2822;
+  background-color: #7a88a3;
+  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(91, 59, 108, 0.5) 100%);
+  border-radius: .7rem;
+  overflow:auto;
+  backdrop-filter: blur(7px);
+  transition: 0.4s all;
+  box-shadow:  -2px 0 7px #000;
+  
+    
+.name{  
+margin-top: 10px;
+text-align: start;
+font-size: 30px;
+color: rgb(53, 201, 157);
+text-align: center;
+
+ }
+ .description{
+  text-align: center;
+  font-size: 20px;
+  color: burlywood;
+  
+ }
+ .img{
+  
+  flex-wrap: wrap;
+ 
+ }
+ .rest{
+  text-align: start;
+  font-size:18px
+ }
+ .hitpoints{
+
+  text-align: center;
+color: blueviolet;
+ }
+  &:hover{
+   
+    
+    ::before{
+      filter: brightness(.5);
+      
+    }
+  }
+}
+
+
+
+.button:hover
+{
+  transform: scale(1.1);
+  
+  
+}
+
+.mask{
+  
+  background-color:  rgba(6,57,76,255);
+  background-image: url("../assets/Gemini_Generated_Image_f1c5g6f1c5g6f1c5.svg");
+  justify-content: center;
+  background-position:center;
+  background-size: cover;
+
+}
+
+.Link {
+  text-decoration: none;
+  border-bottom: none;
+  color: #eeeaea;
+}
+
+.label{
+
+font-size: 25px;
+font-style: italic;
+
+}
+
+.input{
+border-radius: 10px;
+color: #000000;
+background: #cccccc;
+
+border-color: #e24444aa;
+
+
+}
+
+.attributes
+{
+  height:15vh;
+  border-radius: 19px;
+}
+
+.background
+{
+  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(17,0,32,.5) 100%);
+  border-radius: 10px;
+  color: aliceblue;
+  
+}
