@@ -18,9 +18,12 @@ const fetchCharacters = async () => {
 try{
   const response = await axios.get("http://127.0.0.1:8080/users") // port to python server
   setCharacters(response.data);//stores characters that are fetched
+  console.log("CHARACTERS:", characters)
+  
 } catch (error){
   console.error(error)
 }
+
 };
 
 
@@ -37,7 +40,30 @@ useEffect(() => //useEffect renders functions
 {
   setTimeout(()=> setLoading(false), 3300)
   fetchCharacters()
-}, [] )
+  
+
+}, [] );
+
+useEffect(() => {
+  if (characters.length <= 1) {
+    console.log("No characters");
+    setShow(true);
+    console.log("SHOW", show);
+  } else {
+    setShow(false);
+  }
+}, [characters]);
+
+if (show) {
+  return (
+    <div className=" container card bg-dark ">
+      <div className="col card-body ">
+        <h3 className=' text-white'> NO CHARACTERS</h3>
+      </div>
+      <p className='text-white'>Add some below</p>
+    </div>
+  );
+}
 
 // sets the loader
 if(loading)
@@ -50,14 +76,14 @@ if(loading)
       </h1>)
   }
 
- 
+  
 
   return (
     <div>
    
     <div className='container-xxl '>
-      <div className='container my-3 background'>
-      <h1>YOUR CAMPAIGN CHARACTERS</h1>
+      <div className='container my-3'>
+     
       </div>
       
 

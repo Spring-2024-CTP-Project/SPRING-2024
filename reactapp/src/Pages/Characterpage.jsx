@@ -10,6 +10,9 @@ function Characterpage(){
     return(
         <div>
         <Navbar></Navbar>
+        <div className="container my-3 background">
+            <h1>CAMPAIGN CHARACTERS</h1>
+        </div>
         <Characterinfo/>
         <div className="pt-5"></div>
         <Charactersheet/>

@@ -65,7 +65,7 @@ export default function Start() {
       });
 
       const data = await response.json();
-      console.log(response);
+      console.log("RESPONSE". response);
       if (response.ok) {
         setShowModal(false);
         alert("SENT T0 BACKEND!");
@@ -73,7 +73,7 @@ export default function Start() {
 
       } else {
         setShowModal(false);
-        alert("Failed to add Campaign. Please try again later.");
+        alert("Failed to generate campaign. Please try again later.");
       }
     } catch (error) {
       setShowModal(false);

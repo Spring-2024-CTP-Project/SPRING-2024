@@ -149,14 +149,16 @@ color: blueviolet;
 
 .label{
 
-font-size: large;
+font-size: 25px;
 font-style: italic;
 
 }
 
 .input{
 border-radius: 10px;
-background-color: #fefefe;
+color: #000000;
+background: #cccccc;
+
 border-color: #e24444aa;
 
 
