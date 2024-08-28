@@ -18,8 +18,7 @@ function Campaign() {
             <div className="d-flex justify-content-center align-items-center h-100 text-white">
               <div className="">
                 <h1 className="mb-3">WELCOME TO DND.AI</h1>
-
-                <h4 className="mb-3">Get into your campaigns!!</h4>
+                <h4 className="mb-3">Generate story outlines for your campaign using the characters you created!!</h4>
               </div>
             </div>
           </div>

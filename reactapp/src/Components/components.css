@@ -1,13 +1,13 @@
 
 *{
-
-font-family:'Times New Roman', Times, serif}
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
 
 .navigation{
  
   justify-content: center;
-  background-color:#282c34;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background: linear-gradient(-90deg, rgb(22, 79, 100) 20%, rgb(4, 43, 66) 100%);
 
 }
 
@@ -18,15 +18,14 @@ font-family:'Times New Roman', Times, serif}
   width: 50vw;
   margin: 5rem auto;
   border: 1px solid #ffffff22;
-  background-color: #282c34;
   background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(17,0,32,.5) 100%);
-  border-radius: .7rem;
+  border-radius: 1rem; 
   overflow:auto;
   backdrop-filter: blur(7px);
-  transition: 0.4s all;
+  transition: 0.3s all;
   box-shadow:  -2px 0 7px #000;
-  display: flex; /* Add this line */
-  flex-direction: column; /* Add this line */
+  display: flex; 
+  flex-direction: column; 
     
 .name{  
 margin-top: 10px;
@@ -36,11 +35,18 @@ color: cadetblue;
 text-align: center;
 
  }
+
+ .background-image{
+
+  background-image: url("../assets/Gemini_Generated_Image_f1c5g6f1c5g6f1c5.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
  .characterClass{
   text-align: center;
-  font-size: 20px;
+  font-size: 25px;
   color: burlywood;
-  
  }
  .img{
   
@@ -49,7 +55,7 @@ text-align: center;
  }
  .rest{
   text-align: start;
-  font-size:18px
+  font-size:23px
  }
  .hitpoints{
 
@@ -60,11 +66,10 @@ color: blueviolet;
     border: 1px solid #ffffff44;
     box-shadow: 0 7px 50px 10px #000000aa;
     transform: scale(1.01);
-    filter: brightness(1.1);
+    filter: brightness(1.02);
     
     ::before{
       filter: brightness(.5);
-      
     }
   }
 }
@@ -80,7 +85,7 @@ color: blueviolet;
   border-radius: .7rem;
   overflow:auto;
   backdrop-filter: blur(7px);
-  transition: 0.4s all;
+  transition: 0.3s all;
   box-shadow:  -2px 0 7px #000;
   
     
@@ -109,12 +114,12 @@ text-align: center;
  }
  .hitpoints{
 
-  text-align: center;
+text-align: center;
 color: blueviolet;
+
  }
   &:hover{
-   
-    
+
     ::before{
       filter: brightness(.5);
       
@@ -122,13 +127,59 @@ color: blueviolet;
   }
 }
 
+.modaloutline{
+  background: linear-gradient(0deg, #614385 10%, rgba(139, 118, 151, 0.5) 100%);
+
+.characterClass{
+    text-align: center;
+    font-size: 25px;
+    color: rgb(0, 0, 0);
+}
+
+.race{
+  text-align: center;
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+}
+
+.rest{
+  text-align: center;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+}
+
+.background
+{
+  background: linear-gradient(-70deg, rgb(22, 79, 100) 20%, rgb(8, 67, 100) 100%);
+  text-align: start;
+  font-size: 20px;
+  color: rgb(255, 242, 242);
+}
+
+
+}
+
+.form-outline{
+ 
+  font-style:italic;
+
+.character-name{
+  text-align: center;
+  font-size: 30px;
+  color: #ffffff;
+  
+
+}
+
+
+}
 
 
 .button:hover
 {
-  transform: scale(1.1);
-  
-  
+  transition: 0.2s ease-out;
+  transform: scale(1.2);
+  color: linear-gradient(0deg, #614385 10%, rgba(139, 118, 151, 0.5) 100%);
 }
 
 .mask{
@@ -141,6 +192,7 @@ color: blueviolet;
 
 }
 
+
 .Link {
   text-decoration: none;
   border-bottom: none;
@@ -150,30 +202,71 @@ color: blueviolet;
 .label{
 
 font-size: 25px;
-font-style: italic;
 
 }
 
-.input{
-border-radius: 10px;
-color: #000000;
-background: #cccccc;
+.form-control{
+  transition: box-shadow 0.2s ease;
 
-border-color: #e24444aa;
+}
 
+.form-control-lg{
+  transition: box-shadow 0.2s ease;
+  border: none;
+}
+.form-control:focus{
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgb(131, 210, 212);
+  border: none;
+
+}
+
+.form-control-lg:focus{
+  outline: none;
+  transition: box-shadow 0.2s ease;
+  box-shadow: 0 0 0 0.2rem rgb(131, 210, 212);
+  border: none;
 
 }
 
 .attributes
 {
   height:15vh;
+  font-size: 20px;
+ 
   border-radius: 19px;
 }
 
 .background
 {
-  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(17,0,32,.5) 100%);
+  background: linear-gradient(-90deg, rgb(22, 79, 100) 20%, rgb(4, 48, 73) 100%);
+
   border-radius: 10px;
   color: aliceblue;
+  background-color: #282c34;
+  border-radius: .7rem;
+  transition: 0.4s all;
+  box-shadow:  -2px 0 7px #000;
+  display: flex; 
+  flex-direction: column; 
+
+}
+
+.textBody{
+
+  border-radius: 9px;
+  padding: 10px;
+  font-size: xx-large;
+  border-color: #000;
+  background: linear-gradient(0deg, rgba(6,57,76,255) 10%, rgba(219, 135, 241, 0.5) 100%);
+}
+
+.hp-box{
+
+   border-style: solid;
+   width: 200px;
+   justify-content: center;
+  font-size:x-large;
+  border-color: #eeeaea;
   
 }
