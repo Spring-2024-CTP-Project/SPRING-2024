@@ -3,12 +3,12 @@
     margin: auto;
     padding: 0rem;
     text-align: center;
-    
-    background-image: url("../assets/Gemini_Generated_Image_f1c5g6f1c5g6f1c5.jpg");
+    background: linear-gradient(-90deg, rgb(22, 79, 100) 20%, rgb(4, 43, 66) 100%);
+
     background-position: center;
     background-size: cover;
-  
-
+   
+    
    
   }
   
@@ -22,8 +22,6 @@
     background: #cccccc;
     color: black;
     position:relative;
-   
-
 }
 
 .box{
@@ -37,8 +35,15 @@
 
 .background{
     background-color: rgba(250, 241, 215, 0.574);
-
     padding: 1rem;
     
+    
+}
+
+.background-image{
+  
+  background-image: url("../assets/Gemini_Generated_Image_f1c5g6f1c5g6f1c5.jpg");
+  background-position: center;
+  background-size: cover; 
 }
 

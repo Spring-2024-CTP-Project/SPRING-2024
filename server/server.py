@@ -11,16 +11,17 @@ from langchain.indexes import VectorstoreIndexCreator
 from langchain_experimental.agents.agent_toolkits.csv.base import create_csv_agent
 from langchain.agents.agent_types import AgentType
 from langchain.memory import ConversationBufferMemory
-import tiktoken
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import CharacterTextSplitter
 from flask import Flask, render_template, jsonify, request
 from pymongo.mongo_client import MongoClient
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
+from bson import json_util
 from pymongo.server_api import ServerApi
 from flask_cors import CORS
 import os
+import requests
 from langchain_openai import ChatOpenAI
 import openai
 import json
@@ -54,19 +55,23 @@ collection2= client.db.Campaign
 
 @app.route("/users")
 def home_page():
-    users = collection.find()
+    users = collection.find({}) 
     print(users)
-    output = [{ 'Name' : user['name'], 'Race' : user['race'], 'Class' : user['characterClass'], 'Weapons' : user['weapons'], 'Background' : user['background'], 'AttributePoints' : user['points'], 'Allignment': user['allignment'], "Images": user['images'], 'Hitpoints': user['hitpoints']} for user in users]
+    
+    output = [{'_id' : json.dumps(user['_id'], default=str), 'Name' : user['name'], 'Race' : user['race'], 'Class' : user['characterClass'], 'Weapons' : user['weapons'], 'Prompt' : user['prompt'], 'Bonds' : user['bonds'],  'Background' : user['background'], 'AttributePoints' : user['points'],  'Modifiers' : user['modifiers'], 'Level' : user['level'], 'Exp' : user['exp'],'Prof': user['proficiency'],'Allignment': user['allignment'], "Images": user['images'], 'Hitpoints': user['hitpoints'], "Items": user['items']} for user in users]
     return jsonify(output)
 
+
 @app.route("/campaigns")
-def get_campaigns():
+def get_campaigns():  
     campaigns=collection2.find()
-    output=[{'Title' : campaign['title'], 'Description' : campaign['description'], "Characters": campaign['characters'], 'Date': campaign['date']} for campaign in campaigns ]
+    output=[{'_id' : json.dumps(campaign['_id'], default=str),'Title' : campaign['title'], 'Description' : campaign['description'], "Characters": campaign['characters'], 'Date': campaign['date']} for campaign in campaigns ]
     return jsonify(output)
+
 
 @app.route('/process_character', methods=['POST'])
 #All the necessary information for each character
+
 def insert_all_docs():
     try:
         character_data = request.json
@@ -81,6 +86,73 @@ def insert_all_docs():
   
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+#fucntion that sends a prompt to the model and generates text 
+@app.route('/generate', methods=['POST'])
+def generate():
+    generated =[]
+    try:
+        character_data = request.json
+        if not character_data or not isinstance(character_data, dict):
+            return jsonify({"error": "Invalid character data"}), 400 
+
+        message = f"Create a full backstory for a character who is a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. They are a {character_data['prompt']} This character's weapons are the {character_data['weapons']}. Take into account thier allignment is{character_data['allignment']}. Include a seperate section with the Personality, Ideals, Bonds taking into account{character_data['bonds']} and Flaws with this format \n\n Personality: \n\n Bonds:  \n\n Flaws:  Use 140 words."
+        
+        response = AIclient.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a Dungeons & Dragons expert"},
+                {"role": "user", "content": message}
+            ]
+        )
+        generated.append( response.choices[0].message.content.strip())
+        prompt = f"Generate a fantasy image of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. They are equipped with {character_data['weapons']} and have a {character_data['background']} background. Use the characteristics of {character_data['description']} to help you visualize the character. THERE IS NO TEXT ON THE IMAGE EXCEPT, {character_data['name']} at the bottom of the image"
+        response = AIclient.images.generate(
+             model="dall-e-3",
+             prompt=prompt ,
+             size="1024x1024",
+             quality="hd",
+             #n of imgs
+             n=1
+    ) 
+        generated.append(response.data[0].url)
+        return jsonify(generated)
+       
+    except Exception as e:
+        logging.error('An error occurred: %s', traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
+    
+
+
+@app.route('/delete_character', methods=['DELETE'])
+def delete_docs():
+  try:
+      
+      character_data = request.json
+      # Check if character_data is not None and is a dictionary
+      if not character_data or not isinstance(character_data, dict):
+          return jsonify({"error": "Invalid character data"}), 400
+
+      # delete  the character data into the MongoDB collection
+      character_id= character_data.get('_id')
+      print("CHARACTER Data", character_id)
+      object_id = ObjectId(character_id)
+      print("OBJECT ID", object_id)
+      if not object_id:
+            return jsonify({"error": "Missing character ID"}), 400
+      
+      result = collection.delete_one({"_id": object_id})
+
+      if result.deleted_count > 0:
+          return jsonify({"message": "Character deleted successfully"}), 201
+      else:
+          return jsonify({"error": "Failed to delete character"}), 500
+
+  except Exception as e:
+      return jsonify({"error": str(e)}, "CHARACTER ID", object_id), 500
+
+
 
 @app.route('/add_campaign', methods=['POST'])
 def insert_campaign():
@@ -96,7 +168,7 @@ def insert_campaign():
             return jsonify({"Error": "Failed to add Campaign"}), 500
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 
 
 @app.route('/Start_campaign', methods=["POST"])
@@ -147,7 +219,7 @@ def Start():
         data = json.loads(combined_json)
 
 # Convert JSON data to a formatted string
-        formatted_data = json.dumps(data, indent=4)
+        formatted_data = json.dumps(data, indent = 4)
 
 # Write the formatted data to a text file
         with open('combined_skeleton.txt', 'w') as file:
@@ -190,84 +262,6 @@ def Start():
         logging.error('An error occurred: %s', traceback.format_exc())
         return jsonify({"error": str(e)}), 500
 
-
-
-
-
-
-
-
-
-#fucntion that sends a prompt to the model and generates text 
-@app.route('/generate', methods=['POST'])
-def generate():
-    generated =[]
-    try:
-        character_data = request.json
-        if not character_data or not isinstance(character_data, dict):
-            return jsonify({"error": "Invalid character data"}), 400
-
-        message = f"Describe the background of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. This character's weapons are the {character_data['weapons']}. Their allignment is {character_data['allignment']}.  Use 150 words."
-        
-        response = AIclient.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a Dungeons & Dragons expert"},
-                {"role": "user", "content": message}
-            ]
-        )
-        generated.append( response.choices[0].message.content.strip())
-        prompt = f"Generate a fantasy image of a {character_data['race']} {character_data['characterClass']} named {character_data['name']}. They are equipped with {character_data['weapons']} and have a {character_data['background']} background. Use the characteristics of {character_data['description']} to help you visualize the character. THERE IS NO TEXT ON THE IMAGE EXCEPT, {character_data['name']} at the bottom of the image"
-        response = AIclient.images.generate(
-             model="dall-e-3",
-             prompt=prompt ,
-             size="1024x1024",
-             quality="hd",
-             #n of imgs
-             n=1
-    )
-        generated.append(response.data[0].url)
-        return jsonify(generated)
-       
-    except Exception as e:
-        logging.error('An error occurred: %s', traceback.format_exc())
-        return jsonify({"error": str(e)}), 500
-    
-
-
-
-
-
-
-@app.route('/delete_character', methods=['DELETE'])
-def delete_docs():
-  try:
-      character_data = request.json
-
-      # Check if character_data is not None and is a dictionary
-      if not character_data or not isinstance(character_data, dict):
-          return jsonify({"error": "Invalid character data"}), 400
-
-      # delete  the character data into the MongoDB collection
-      
-     
-      character_id= character_data.get('_id:')
-      object_id = ObjectId(character_id)
-      print("CHARACTER ID", object_id)
-      
-      if not object_id:
-            return jsonify({"error": "Missing character ID"}), 400
-      
-
-      result = collection.delete_one({"_id": object_id})
-
-      if result.deleted_count > 0:
-          return jsonify({"message": "Character deleted successfully"}), 201
-      else:
-          return jsonify({"error": "Failed to delete character"}), 500
-
-  except Exception as e:
-      return jsonify({"error": str(e)}), 500
 
 
 if __name__=="__main__":

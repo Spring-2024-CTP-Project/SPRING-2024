@@ -7,7 +7,6 @@ import Spinner from "react-bootstrap/esm/Spinner";
 
 export default function Campaigninfo() {
   const [campaigns, setCampaigns] = useState([{}]);
-  const [characters, setCharacters] = useState([{}]);
   const [loading, setLoading] = useState(true);
 
   const fetchCampaign = async () => {
@@ -16,30 +15,33 @@ export default function Campaigninfo() {
       setCampaigns(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      console.log("Campaign:", campaigns)
+      setLoading(false)
     }
+
   };
 
   useEffect(() =>
     //useEffect renders functions
     {
-      setTimeout(() => setLoading(false), 3300);
       fetchCampaign();
     }, []);
 
   // sets the loader
-  if (loading) {
-    return (
-      <h1 className="background my-4 ">
-        <Spinner animation="border" />
-      </h1>
-    );
-  }
 
   return (
     <div>
       <div className="">
         <br></br>
-        <div className="container row">
+        { loading ?  (  <h1 className="background my-4 ">
+        <Spinner animation="border" />
+      </h1>) : ( campaigns.length===0 ? (<div className=" container card bg-dark ">
+  <div className="col card-body ">
+    <h3 className=" text-white"> NO CAMPAIGNS</h3>
+  </div>
+  <p className="text-white">Add some below</p>
+</div>) : (<div className="container row">
           {campaigns.map((campaign, index) => (
             <div className="col" key={index}>
               <Card
@@ -51,7 +53,8 @@ export default function Campaigninfo() {
               </Card>
             </div>
           ))}
-        </div>
+        </div>))}
+
       </div>
     </div>
   );

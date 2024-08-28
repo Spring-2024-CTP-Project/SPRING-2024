@@ -1,28 +1,15 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Navbar from "../Components/navbar";
+import Footer from "../Components/footer";
+import { INITCAMPAIGN } from "../Components/Util";
 
 export default function CampaignCreation() {
   const [characters, setCharacters] = useState([{}]);
-  const [campaign, setCampaign] = useState({
-    title: "",
-    description: "",
-    characters: [],
-    date: "",
-    log: [""],
-  });
+  const [campaign, setCampaign] = useState(INITCAMPAIGN,);
 
   console.log(campaign);
-
-  const intialCampaign = {
-    title: "",
-    description: "",
-    characters: [],
-    date: "",
-    log: [""],
-  };
-
-
   
   //#########################################################
   //handles change of the various fields
@@ -86,7 +73,7 @@ export default function CampaignCreation() {
         if (response.ok) {
           alert("Campaign added successfully!");
           console.log("Response data:", data);
-          setCampaign(intialCampaign);
+          setCampaign(INITCAMPAIGN);
           console.log(campaign);
         } else {
           alert("Failed to add Campaign. Please try again later.");
@@ -117,12 +104,13 @@ export default function CampaignCreation() {
   }, []);
 
   return (
-    <div className="container background ">
-      <div>
-        <form>
-          <label className="label mx-2">Enter the Name of this Campaign</label>
+    <div className=" ">
+      <Navbar></Navbar>
+      <div className="container background my-3">
+        <form className="pt-3 ">
+          <label className="label">Enter the Name of this Campaign</label>
           <input
-            className="input"
+            className="mx-1 form-control-lg row container"
             name="title"
             type="text"
             value={campaign.name}
@@ -131,26 +119,31 @@ export default function CampaignCreation() {
 
           <div className="container pt-3">
             <label className="label">
-              Choose the Characters for the Campaign!
+              Choose the Characters for you want to include in the Campaign!
             </label>
           </div>
 
-          <div className="container ">
+          <div className="container">
             {characters.map((character, index) => (
+              
               <div
-                className="container d-flex justify-content-start text-center my-2 background"
+                className="container-fluid"
                 key={index}
               >
-                {console.log(character.Name)}
-                <label className=" mx-2"> {character.Name}</label>
-
+<label className="corm-check-label"> {character.Name}</label>
+                <div className="container"> 
                 <input
-                  className="input"
+                  className="form-check-input"
                   type="checkbox"
                   name="characters"
                   value={character.Name}
                   onChange={handleChange}
                 ></input>
+                </div>
+                 
+                {console.log(character.Name)}
+               
+               
               </div>
             ))}
           </div>
@@ -166,18 +159,22 @@ export default function CampaignCreation() {
             <input
               type="text"
               name="description"
-              className="input"
+              className="form-control-lg"
               onChange={handleChange}
               value={campaign.description}
             ></input>
           </div>
         </form>
       </div>
-
-      <button name="add_camapign" className="btn btn-dark" onClick={handleSubmit}>
+     
+      <button name="add_camapign" className="btn btn-dark my-3" onClick={handleSubmit}>
+        
         ADD CAMPAIGN
       </button>
-
+      
+      <Footer> </Footer>
+      
     </div>
+    
   );
 }

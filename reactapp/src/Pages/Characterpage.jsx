@@ -1,5 +1,4 @@
 import {React} from "react"
-
 import Characterinfo from "../Components/characterinfo.jsx"
 import Charactersheet from "../Components/charactersheet.jsx"
 import Navbar from "../Components/navbar.jsx"
@@ -8,9 +7,11 @@ function Characterpage(){
 
 
     return(
-        <div>
+        <div className="">
         <Navbar></Navbar>
-        <div className="container my-3 background">
+      
+        <div class=" background-image">
+        <div className="container my-2 background">
             <h1>CAMPAIGN CHARACTERS</h1>
         </div>
         <Characterinfo/>
@@ -19,6 +20,8 @@ function Characterpage(){
         <div className="pt-3"></div>
         <Footer></Footer>       
         </div>
+        </div>
+       
        
         
         )
