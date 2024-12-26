@@ -1,6 +1,6 @@
 # DND.AI <img src =https://github.com/Spring-2024-CTP-Project/SPRING-2024/assets/141372534/9023ca0e-1ad5-4dba-9798-4fe83fb6c9f0 width ="50px" height = "50px">
 
-This project seeks to create an AI Dungeons and Dragons Tool to help flesh out a party's perilous adventure. It uses Dalle 3 for image generation and GPT 3.5 for tect generation
+This project seeks to create an AI Dungeons and Dragons Tool to help flesh out a party's perilous adventure. It uses Dalle 3 for image generation and GPT 3.5 for text generation
 
 # Quick Set up Instructions
 
